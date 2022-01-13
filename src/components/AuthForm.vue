@@ -1,8 +1,17 @@
 <template>
   <div class="page">
+    <app-toast
+      variant="danger"
+      :title="`${this.isRegister ? 'Register' : 'Login'} Failed!`"
+      :dismissible="true"
+      :show="toastVisible"
+      :body="errorMessage"
+      :onDismiss="hideToast"
+      :top="30"
+    />
     <div class="form p-6">
-      <validation-observer ref="form">
-        <b-form @submit.prevent="onSubmit">
+      <validation-observer v-slot="{ handleSubmit }">
+        <b-form @submit.prevent="handleSubmit(onSubmit)">
           <h1 class="form-title mt-3 mb-7">
             {{ isRegister ? "Register" : "LOGIN" }}
           </h1>
@@ -51,25 +60,49 @@
 <script>
 import FormTextField from "./FormTextField.vue";
 import { ValidationObserver } from "vee-validate";
+import client from "../utils/client";
+import extractErrorMessage from "../utils/extractErrorMessage";
+import AppToast from "./AppToast.vue";
 
 export default {
-  components: { FormTextField, ValidationObserver },
+  components: { FormTextField, ValidationObserver, AppToast },
   props: ["isRegister"],
   data() {
     return {
       email: "",
       password: "",
       user: "",
+      toastVisible: false,
+      errorMessage: "",
     };
   },
   methods: {
     async onSubmit() {
-      const success = await this.$refs.form.validate();
-      if (!success) {
-        alert("WRONG!");
-        return;
+      const url = this.isRegister ? "/users" : "/users/login";
+      const payload = this.isRegister
+        ? {
+            user: {
+              email: this.email,
+              password: this.password,
+              username: this.user,
+            },
+          }
+        : { user: { email: this.email, password: this.password } };
+      try {
+        const data = await client(url, { method: "POST", data: payload });
+        console.log("data", data);
+      } catch (error) {
+        console.log("error", error);
+        const message = extractErrorMessage(error);
+        this.errorMessage = message;
+        this.showToast();
       }
-      console.log(this.user, this.email, this.password);
+    },
+    showToast() {
+      this.toastVisible = true;
+    },
+    hideToast() {
+      this.toastVisible = false;
     },
   },
 };
