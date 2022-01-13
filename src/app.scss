@@ -1,2 +1,44 @@
+$gray-400: #eceeef;
+$gray-500: #dddddd;
+$gray-600: #818a91;
+$gray-700: #777777;
+$gray-800: #55595c;
+$gray-900: #373a3c;
+
+$gray-title: #707070;
+
+$blue: #1c7cd5;
+$blue-light: #dcedf6;
+$purple: #6f42c1;
+$red: #cb2e25;
+$red-light: #efdfdf;
+$yellow: #f0ad4e;
+$yellow-light: #fcf7e4;
+$green: #5cb85c;
+$green-light: #e2eed8;
+$cyan: #56c0e0;
+
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+
+$spacers: (
+  6: (
+    $spacer * 1.25,
+  ),
+  7: (
+    $spacer * 1.75,
+  ),
+);
+
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 @import "node_modules/bootstrap-vue/src/index.scss";
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  font-family: "Helvetica Neue";
+  color: $gray-900;
+}
