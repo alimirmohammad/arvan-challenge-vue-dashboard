@@ -1,13 +1,16 @@
 <template>
   <div>
     <validation-provider :name="name" :rules="rules" v-slot="{ errors }">
-      <label :for="name">{{ label }}</label>
+      <label :for="name" :class="{ wrong: errors.length > 0 }">{{
+        label
+      }}</label>
       <b-form-input
         @input="handleInput"
         :value="value"
         :state="errors.length > 0 ? false : null"
         :id="name"
         :type="type"
+        trim
       ></b-form-input>
       <b-form-invalid-feedback :state="errors.length > 0 ? false : null">
         {{ errors[0] }}
@@ -30,3 +33,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../app.scss";
+.form-control.is-invalid {
+  background-image: none;
+}
+.wrong {
+  color: $red;
+}
+</style>
