@@ -1,11 +1,11 @@
 <template>
-  <auth-form />
+  <auth-form :isRegister="true" />
 </template>
 
 <script>
 import AuthForm from "../components/AuthForm.vue";
 export default {
-  name: "Login",
+  name: "Register",
   components: { AuthForm },
 };
 </script>
