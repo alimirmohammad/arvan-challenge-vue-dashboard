@@ -64,7 +64,7 @@ import { authenticate } from "../api/auth-api";
 import extractErrorMessage from "../utils/extractErrorMessage";
 import AppToast from "./AppToast.vue";
 import { MUTATIONS_NAMES } from "../constants/mutation-names";
-import { ROUTES } from "../constants/routes";
+import { ROUTE_NAMES } from "../constants/routes";
 
 export default {
   components: { FormTextField, ValidationObserver, AppToast },
@@ -88,7 +88,7 @@ export default {
           username: this.username,
         });
         this.$store.commit(MUTATIONS_NAMES.AUTHENTICATE, authData);
-        this.$router.replace(ROUTES.ARTICLES_ROUTE);
+        this.$router.replace({ name: ROUTE_NAMES.ARTICLES_FIRST_PAGE });
       } catch (error) {
         const message = extractErrorMessage(error);
         this.errorMessage = message;
