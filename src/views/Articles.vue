@@ -8,92 +8,21 @@
 </template>
 
 <script>
+import { getAllArticles } from "../api/articles-api";
+import { mapArticleDtoToTableRow } from "../utils/data-mapping";
 export default {
   data() {
     return {
-      items: [
-        {
-          "#": 1,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-        {
-          "#": 2,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-        {
-          "#": 3,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-        {
-          "#": 4,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-        {
-          "#": 5,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-        {
-          "#": 6,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-        {
-          "#": 7,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-        {
-          "#": 8,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-        {
-          "#": 9,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-        {
-          "#": 10,
-          Title: "Article title",
-          Author: "@author_username",
-          Tags: "list of tags",
-          Excerpt: "First 20 words of article body",
-          Created: "June 11 ,2019",
-        },
-      ],
+      items: [],
     };
+  },
+  async mounted() {
+    try {
+      const res = await getAllArticles();
+      this.items = res.data.articles.map(mapArticleDtoToTableRow);
+    } catch (error) {
+      console.log(error);
+    }
   },
 };
 </script>
