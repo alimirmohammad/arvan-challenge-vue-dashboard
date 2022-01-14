@@ -16,10 +16,10 @@
             {{ isRegister ? "Register" : "LOGIN" }}
           </h1>
           <form-text-field
-            name="user"
+            name="username"
             rules="required"
             label="User"
-            v-model="user"
+            v-model="username"
             type="text"
             class="mb-4"
             v-if="isRegister"
@@ -60,9 +60,11 @@
 <script>
 import FormTextField from "./FormTextField.vue";
 import { ValidationObserver } from "vee-validate";
-import client from "../utils/client";
+import { authenticate } from "../api/auth-api";
 import extractErrorMessage from "../utils/extractErrorMessage";
 import AppToast from "./AppToast.vue";
+import { MUTATIONS_NAMES } from "../constants/mutation-names";
+import { ROUTES } from "../constants/routes";
 
 export default {
   components: { FormTextField, ValidationObserver, AppToast },
@@ -71,28 +73,23 @@ export default {
     return {
       email: "",
       password: "",
-      user: "",
+      username: "",
       toastVisible: false,
       errorMessage: "",
     };
   },
   methods: {
     async onSubmit() {
-      const url = this.isRegister ? "/users" : "/users/login";
-      const payload = this.isRegister
-        ? {
-            user: {
-              email: this.email,
-              password: this.password,
-              username: this.user,
-            },
-          }
-        : { user: { email: this.email, password: this.password } };
       try {
-        const data = await client(url, { method: "POST", data: payload });
-        console.log("data", data);
+        const authData = await authenticate({
+          isRegister: this.isRegister,
+          email: this.email,
+          password: this.password,
+          username: this.username,
+        });
+        this.$store.commit(MUTATIONS_NAMES.AUTHENTICATE, authData);
+        this.$router.replace(ROUTES.ARTICLES_ROUTE);
       } catch (error) {
-        console.log("error", error);
         const message = extractErrorMessage(error);
         this.errorMessage = message;
         this.showToast();
