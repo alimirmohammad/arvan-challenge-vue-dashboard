@@ -1,6 +1,7 @@
-export function mapArticleDtoToTableRow(article, index) {
+export function mapArticleDtoToTableRow(article, i) {
   return {
-    "#": index + 1,
+    index: i + 1,
+    slug: article.slug,
     Title: article.title,
     Author: `@${article.author.username}`,
     Tags: article.tagList.join(", "),
@@ -12,3 +13,13 @@ export function mapArticleDtoToTableRow(article, index) {
     }).format(new Date(article.createdAt)),
   };
 }
+
+export const tableFields = [
+  { key: "index", label: "#" },
+  "Title",
+  "Author",
+  "Tags",
+  "Excerpt",
+  "Created",
+  { key: "actions", label: "" },
+];
