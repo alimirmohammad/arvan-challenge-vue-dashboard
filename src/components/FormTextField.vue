@@ -1,6 +1,11 @@
 <template>
   <div>
-    <validation-provider :name="name" :rules="rules" v-slot="{ errors }">
+    <validation-provider
+      :name="name"
+      :rules="rules"
+      v-slot="{ errors }"
+      :mode="mode"
+    >
       <label :for="name" :class="{ wrong: errors.length > 0 }">{{
         label
       }}</label>
@@ -24,7 +29,7 @@ import { ValidationProvider } from "vee-validate";
 
 export default {
   name: "FormTextField",
-  props: ["name", "rules", "label", "value", "type"],
+  props: ["name", "rules", "label", "value", "type", "mode"],
   components: { ValidationProvider },
   methods: {
     handleInput(text) {
