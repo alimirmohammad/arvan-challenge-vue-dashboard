@@ -34,15 +34,15 @@
               variant="primary"
               class="submit-btn"
               type="submit"
-              :disabled="false"
+              :disabled="loading"
             >
               <b-spinner
-                v-if="false"
+                v-if="loading"
                 variant="light"
                 label="loading"
                 small
               ></b-spinner>
-              Submit
+              <span v-else>Submit</span>
             </b-button>
           </b-form>
         </validation-observer>
@@ -78,13 +78,13 @@
 import { ValidationObserver } from "vee-validate";
 import FormTextField from "../components/FormTextField.vue";
 import {
-  createArticle,
   getAllTags,
   getArticleBySlug,
-  updateArticle,
+  writeArticle,
 } from "../api/articles-api";
 import FormTextAreaField from "../components/FormTextAreaField.vue";
 import { ROUTE_NAMES } from "../constants/routes";
+import extractErrorMessage from "../utils/extractErrorMessage";
 
 export default {
   components: { FormTextField, ValidationObserver, FormTextAreaField },
@@ -97,6 +97,7 @@ export default {
       selected: [],
       options: [],
       article: null,
+      loading: false,
     };
   },
   computed: {
@@ -107,28 +108,20 @@ export default {
   },
   methods: {
     async onSubmit() {
+      this.loading = true;
       try {
-        if (this.article) {
-          await updateArticle({
-            title: this.title,
-            body: this.body,
-            description: this.description,
-            tagList: this.selected,
-            slug: this.$route.params.slug,
-          });
-          this.$emit("success", "updated");
-        } else {
-          await createArticle({
-            title: this.title,
-            body: this.body,
-            description: this.description,
-            tagList: this.selected,
-          });
-          this.$emit("success", "created");
-        }
+        await writeArticle({
+          title: this.title,
+          body: this.body,
+          description: this.description,
+          tagList: this.selected,
+          slug: this.$route.params.slug,
+        });
+        this.$emit("success", this.article ? "updated" : "created");
         this.$router.push({ name: ROUTE_NAMES.ARTICLES_FIRST_PAGE });
       } catch (error) {
-        console.log(error);
+        this.$emit("fail", extractErrorMessage(error));
+        this.loading = false;
       }
     },
     addTag() {
@@ -142,12 +135,16 @@ export default {
         const res = await getAllTags();
         this.options = res.data.tags;
       } catch (error) {
-        console.log(error);
+        this.$emit("fail", extractErrorMessage(error));
       }
     },
     async getArticle(slug) {
-      const res = await getArticleBySlug(slug);
-      this.article = res.data.article;
+      try {
+        const res = await getArticleBySlug(slug);
+        this.article = res.data.article;
+      } catch (error) {
+        this.$emit("fail", extractErrorMessage(error));
+      }
     },
   },
   mounted() {

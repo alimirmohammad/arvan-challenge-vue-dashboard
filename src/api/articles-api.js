@@ -13,19 +13,7 @@ export async function getArticleBySlug(slug) {
   return client(API_ROUTES.ARTICLE_BY_SLUG_ROUTE(slug));
 }
 
-export async function createArticle({ title, description, body, tagList }) {
-  const payload = {
-    article: {
-      title,
-      description,
-      body,
-      tagList,
-    },
-  };
-  return client(API_ROUTES.ARTICLES_ROUTE, { method: "POST", data: payload });
-}
-
-export async function updateArticle({
+export async function writeArticle({
   title,
   description,
   body,
@@ -40,10 +28,13 @@ export async function updateArticle({
       tagList,
     },
   };
-  return client(API_ROUTES.ARTICLE_BY_SLUG_ROUTE(slug), {
-    method: "PUT",
-    data: payload,
-  });
+  return client(
+    slug ? API_ROUTES.ARTICLE_BY_SLUG_ROUTE(slug) : API_ROUTES.ARTICLES_ROUTE,
+    {
+      method: slug ? "PUT" : "POST",
+      data: payload,
+    }
+  );
 }
 
 export async function deleteArticle(slug) {

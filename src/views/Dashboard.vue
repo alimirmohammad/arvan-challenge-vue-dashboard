@@ -22,15 +22,15 @@
     </aside>
     <main class="main">
       <app-toast
-        variant="success"
-        :title="`${message !== 'deleted' ? 'Well done! ' : ''}`"
+        :variant="wasSuccessful ? 'success' : 'danger'"
+        :title="toastTitle"
         :dismissible="false"
         :show="toastVisible"
-        :body="`Article ${message} successfully`"
+        :body="toastBody"
         :onDismiss="hideToast"
         :top="20"
       />
-      <router-view @success="onSuccess"></router-view>
+      <router-view @success="onSuccess" @fail="onFail"></router-view>
     </main>
   </div>
 </template>
@@ -47,11 +47,20 @@ export default {
       CREATE_ARTICLE_ROUTE_NAME: ROUTE_NAMES.CREATE_ARTICLE,
       toastVisible: false,
       message: "",
+      wasSuccessful: false,
     };
   },
   computed: {
     username() {
       return this.$store.state.username;
+    },
+    toastTitle() {
+      if (!this.wasSuccessful) return "";
+      return `${this.message !== "deleted" ? "Well done! " : ""}`;
+    },
+    toastBody() {
+      if (!this.wasSuccessful) return this.message;
+      return `Article ${this.message} successfully`;
     },
   },
   methods: {
@@ -65,8 +74,16 @@ export default {
     hideToast() {
       this.toastVisible = false;
     },
-    onSuccess(value) {
-      this.message = value;
+    onSuccess(message) {
+      this.wasSuccessful = true;
+      this.setToastMessage(message);
+    },
+    onFail(message) {
+      this.wasSuccessful = false;
+      this.setToastMessage(message);
+    },
+    setToastMessage(message) {
+      this.message = message;
       this.showToast();
     },
   },

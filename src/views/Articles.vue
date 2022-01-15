@@ -45,6 +45,7 @@
 import { ROUTE_NAMES } from "../constants/routes";
 import { deleteArticle, getAllArticles } from "../api/articles-api";
 import { mapArticleDtoToTableRow, tableFields } from "../utils/table-utils";
+import extractErrorMessage from "../utils/extractErrorMessage";
 export default {
   data() {
     return {
@@ -66,7 +67,7 @@ export default {
         const res = await getAllArticles();
         this.items = res.data.articles.map(mapArticleDtoToTableRow);
       } catch (error) {
-        console.log(error);
+        this.$emit("fail", extractErrorMessage(error));
       }
     },
     async handleDelete() {
@@ -75,7 +76,7 @@ export default {
         await this.getArticles();
         this.$emit("success", "deleted");
       } catch (error) {
-        console.log(error);
+        this.$emit("fail", extractErrorMessage(error));
       }
     },
   },
