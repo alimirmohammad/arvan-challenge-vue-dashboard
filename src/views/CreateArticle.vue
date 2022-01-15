@@ -77,7 +77,12 @@
 <script>
 import { ValidationObserver } from "vee-validate";
 import FormTextField from "../components/FormTextField.vue";
-import { createArticle, getAllTags } from "../api/articles-api";
+import {
+  createArticle,
+  getAllTags,
+  getArticleBySlug,
+  updateArticle,
+} from "../api/articles-api";
 import FormTextAreaField from "../components/FormTextAreaField.vue";
 import { ROUTE_NAMES } from "../constants/routes";
 
@@ -91,6 +96,7 @@ export default {
       tag: "",
       selected: [],
       options: [],
+      article: null,
     };
   },
   computed: {
@@ -102,13 +108,24 @@ export default {
   methods: {
     async onSubmit() {
       try {
-        await createArticle({
-          title: this.title,
-          body: this.body,
-          description: this.description,
-          tagList: this.selected,
-        });
-        this.$emit("success", "created");
+        if (this.article) {
+          await updateArticle({
+            title: this.title,
+            body: this.body,
+            description: this.description,
+            tagList: this.selected,
+            slug: this.$route.params.slug,
+          });
+          this.$emit("success", "updated");
+        } else {
+          await createArticle({
+            title: this.title,
+            body: this.body,
+            description: this.description,
+            tagList: this.selected,
+          });
+          this.$emit("success", "created");
+        }
         this.$router.push({ name: ROUTE_NAMES.ARTICLES_FIRST_PAGE });
       } catch (error) {
         console.log(error);
@@ -128,9 +145,26 @@ export default {
         console.log(error);
       }
     },
+    async getArticle(slug) {
+      const res = await getArticleBySlug(slug);
+      this.article = res.data.article;
+    },
   },
   mounted() {
     this.getTags();
+    const { slug } = this.$route.params;
+    if (!slug) return;
+    this.getArticle(slug);
+  },
+  watch: {
+    article(value) {
+      if (value) {
+        this.title = value.title;
+        this.description = value.description;
+        this.body = value.body;
+        this.selected = value.tagList;
+      }
+    },
   },
 };
 </script>

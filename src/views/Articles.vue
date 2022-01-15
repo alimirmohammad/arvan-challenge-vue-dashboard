@@ -16,7 +16,10 @@
               Edit
             </b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item-button v-b-modal.delete-modal>
+            <b-dropdown-item-button
+              v-b-modal.delete-modal
+              @click="setSlug(data.item.slug)"
+            >
               Delete
             </b-dropdown-item-button>
           </b-dropdown>
@@ -31,7 +34,7 @@
       ok-title="Yes"
       cancel-variant="light"
       ok-variant="danger"
-      @ok="deleteArticle"
+      @ok="handleDelete"
     >
       <p class="my-4">Are you sure to delete Article?</p>
     </b-modal>
@@ -40,30 +43,40 @@
 
 <script>
 import { ROUTE_NAMES } from "../constants/routes";
-import { getAllArticles } from "../api/articles-api";
-import { mapArticleDtoToTableRow, tableFields } from "../utils/data-mapping";
+import { deleteArticle, getAllArticles } from "../api/articles-api";
+import { mapArticleDtoToTableRow, tableFields } from "../utils/table-utils";
 export default {
   data() {
     return {
       items: [],
       fields: tableFields,
       EDIT_ROUTE: ROUTE_NAMES.EDIT_ARTICLE,
+      slug: "",
     };
   },
   async mounted() {
-    try {
-      const res = await getAllArticles();
-      this.items = res.data.articles.map(mapArticleDtoToTableRow);
-    } catch (error) {
-      console.log(error);
-    }
+    this.getArticles();
   },
   methods: {
-    printSlug(slug) {
-      console.log(slug);
+    setSlug(slug) {
+      this.slug = slug;
     },
-    deleteArticle() {
-      console.log("deleted ...");
+    async getArticles() {
+      try {
+        const res = await getAllArticles();
+        this.items = res.data.articles.map(mapArticleDtoToTableRow);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleDelete() {
+      try {
+        await deleteArticle(this.slug);
+        await this.getArticles();
+        this.$emit("success", "deleted");
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
