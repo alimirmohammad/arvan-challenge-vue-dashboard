@@ -8,8 +8,12 @@ export default async function client(endpoint, options = {}) {
     fetchOptions.body = JSON.stringify(options.data);
     if (!fetchOptions.headers) fetchOptions.headers = {};
     fetchOptions.headers["Content-Type"] = "application/json";
-    const token = store.state.token;
-    if (token) fetchOptions.headers["Authorization"] = `Token ${token}`;
+  }
+
+  const token = store.state.token;
+  if (token) {
+    if (!fetchOptions.headers) fetchOptions.headers = {};
+    fetchOptions.headers["Authorization"] = `Token ${token}`;
   }
 
   const response = await fetch(url, fetchOptions);
