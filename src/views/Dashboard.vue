@@ -21,7 +21,16 @@
       </nav>
     </aside>
     <main class="main">
-      <router-view></router-view>
+      <app-toast
+        variant="success"
+        :title="`${message !== 'deleted' ? 'Well done! ' : ''}`"
+        :dismissible="false"
+        :show="toastVisible"
+        :body="`Article ${message} successfully`"
+        :onDismiss="hideToast"
+        :top="20"
+      />
+      <router-view @success="onSuccess"></router-view>
     </main>
   </div>
 </template>
@@ -29,11 +38,15 @@
 <script>
 import { ROUTE_NAMES } from "../constants/routes";
 import { MUTATIONS_NAMES } from "../constants/mutation-names";
+import AppToast from "../components/AppToast.vue";
 export default {
+  components: { AppToast },
   data() {
     return {
       ALL_ARTICLES_ROUTE_NAME: ROUTE_NAMES.ARTICLES_FIRST_PAGE,
       CREATE_ARTICLE_ROUTE_NAME: ROUTE_NAMES.CREATE_ARTICLE,
+      toastVisible: false,
+      message: "",
     };
   },
   computed: {
@@ -45,6 +58,16 @@ export default {
     logout() {
       this.$store.commit(MUTATIONS_NAMES.LOGOUT);
       this.$router.replace({ name: ROUTE_NAMES.LOGIN });
+    },
+    showToast() {
+      this.toastVisible = true;
+    },
+    hideToast() {
+      this.toastVisible = false;
+    },
+    onSuccess(value) {
+      this.message = value;
+      this.showToast();
     },
   },
 };
@@ -101,6 +124,7 @@ export default {
   .main {
     grid-area: main;
     padding: 24px 30px 73px;
+    position: relative;
   }
 }
 </style>
