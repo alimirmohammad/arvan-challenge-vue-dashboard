@@ -47,6 +47,7 @@ import { deleteArticle, getAllArticles } from "../api/articles-api";
 import { mapArticleDtoToTableRow, tableFields } from "../utils/table-utils";
 import extractErrorMessage from "../utils/extractErrorMessage";
 export default {
+  name: "ArticlesList",
   data() {
     return {
       items: [],

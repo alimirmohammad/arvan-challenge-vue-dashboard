@@ -1,9 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import { ROUTES, ROUTE_NAMES } from "../constants/routes";
-import Login from "../views/Login.vue";
-import Register from "../views/Register.vue";
-import Articles from "../views/Articles.vue";
+import AuthForm from "../views/AuthForm.vue";
+import ArticlesList from "../views/ArticlesList.vue";
 import Dashboard from "../views/Dashboard.vue";
 import WriteArticle from "../views/WriteArticle.vue";
 import store from "../store/index";
@@ -14,13 +13,14 @@ const routes = [
   {
     path: ROUTES.LOGIN_ROUTE,
     name: ROUTE_NAMES.LOGIN,
-    component: Login,
+    component: AuthForm,
     meta: { onlyUnauthenticated: true },
   },
   {
     path: ROUTES.REGISTER_ROUTE,
     name: ROUTE_NAMES.REGISTER,
-    component: Register,
+    component: AuthForm,
+    props: { isRegister: true },
     meta: { onlyUnauthenticated: true },
   },
   {
@@ -31,12 +31,12 @@ const routes = [
       {
         path: ROUTES.ARTICLES_FIRST_PAGE_PATH,
         name: ROUTE_NAMES.ARTICLES_FIRST_PAGE,
-        component: Articles,
+        component: ArticlesList,
       },
       {
         path: ROUTES.ARTICLES_PAGE_PATH,
         name: ROUTE_NAMES.ARTICLES_PAGE,
-        component: Articles,
+        component: ArticlesList,
       },
       {
         path: ROUTES.CREATE_ARTICLE_PATH,
