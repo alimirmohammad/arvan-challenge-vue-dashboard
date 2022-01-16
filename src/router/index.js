@@ -5,7 +5,7 @@ import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import Articles from "../views/Articles.vue";
 import Dashboard from "../views/Dashboard.vue";
-import CreateArticle from "../views/CreateArticle.vue";
+import WriteArticle from "../views/WriteArticle.vue";
 import store from "../store/index";
 
 Vue.use(VueRouter);
@@ -41,12 +41,12 @@ const routes = [
       {
         path: ROUTES.CREATE_ARTICLE_PATH,
         name: ROUTE_NAMES.CREATE_ARTICLE,
-        component: CreateArticle,
+        component: WriteArticle,
       },
       {
         path: ROUTES.EDIT_ARTICLE_PATH,
         name: ROUTE_NAMES.EDIT_ARTICLE,
-        component: CreateArticle,
+        component: WriteArticle,
       },
     ],
   },

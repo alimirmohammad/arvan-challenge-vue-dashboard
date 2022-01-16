@@ -72,3 +72,15 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../app.scss";
+.tag-section {
+  flex: 3;
+}
+.tags-container {
+  border: 1px solid $gray-500;
+  border-radius: 4px;
+  padding: 1rem;
+}
+</style>

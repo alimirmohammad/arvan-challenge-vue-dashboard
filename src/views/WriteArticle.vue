@@ -30,20 +30,11 @@
               class="mb-7"
               rows="8"
             ></form-text-area-field>
-            <b-button
-              variant="primary"
-              class="submit-btn"
+            <loading-button
               type="submit"
-              :disabled="loading"
-            >
-              <b-spinner
-                v-if="loading"
-                variant="light"
-                label="loading"
-                small
-              ></b-spinner>
-              <span v-else>Submit</span>
-            </b-button>
+              :loading="loading"
+              label="Submit"
+            ></loading-button>
           </b-form>
         </validation-observer>
       </section>
@@ -61,16 +52,18 @@ import FormTextField from "../components/FormTextField.vue";
 import { getArticleBySlug, writeArticle } from "../api/articles-api";
 import FormTextAreaField from "../components/FormTextAreaField.vue";
 import TagsSelector from "../components/TagsSelector.vue";
+import LoadingButton from "../components/LoadingButton.vue";
 import { ROUTE_NAMES } from "../constants/routes";
 import extractErrorMessage from "../utils/extractErrorMessage";
 
 export default {
-  name: "CreateArticle",
+  name: "WriteArticle",
   components: {
     FormTextField,
     ValidationObserver,
     FormTextAreaField,
     TagsSelector,
+    LoadingButton,
   },
   data() {
     return {
@@ -131,23 +124,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../app.scss";
 .wrapper {
   display: flex;
   gap: 30px;
 }
 .article-section {
   flex: 7;
-}
-.tag-section {
-  flex: 3;
-}
-.tags-container {
-  border: 1px solid $gray-500;
-  border-radius: 4px;
-  padding: 1rem;
-}
-.submit-btn {
-  width: 100px;
 }
 </style>
