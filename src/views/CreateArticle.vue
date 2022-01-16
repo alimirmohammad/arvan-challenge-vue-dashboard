@@ -47,29 +47,10 @@
           </b-form>
         </validation-observer>
       </section>
-      <section class="tag-section">
-        <validation-observer ref="form" v-slot="{ handleSubmit }">
-          <b-form @submit.prevent="handleSubmit(addTag)">
-            <form-text-field
-              name="tags"
-              rules="required"
-              label="Tags"
-              v-model="tag"
-              type="text"
-              class="mb-4"
-              mode="passive"
-            ></form-text-field>
-          </b-form>
-        </validation-observer>
-        <div class="tags-container">
-          <b-form-checkbox-group
-            v-model="selected"
-            :options="sortedOptions"
-            name="tags"
-            stacked
-          ></b-form-checkbox-group>
-        </div>
-      </section>
+      <tags-selector
+        :selected="selected"
+        @change-selected-tags="handleSelectTags"
+      ></tags-selector>
     </div>
   </div>
 </template>
@@ -77,34 +58,29 @@
 <script>
 import { ValidationObserver } from "vee-validate";
 import FormTextField from "../components/FormTextField.vue";
-import {
-  getAllTags,
-  getArticleBySlug,
-  writeArticle,
-} from "../api/articles-api";
+import { getArticleBySlug, writeArticle } from "../api/articles-api";
 import FormTextAreaField from "../components/FormTextAreaField.vue";
+import TagsSelector from "../components/TagsSelector.vue";
 import { ROUTE_NAMES } from "../constants/routes";
 import extractErrorMessage from "../utils/extractErrorMessage";
 
 export default {
-  components: { FormTextField, ValidationObserver, FormTextAreaField },
+  name: "CreateArticle",
+  components: {
+    FormTextField,
+    ValidationObserver,
+    FormTextAreaField,
+    TagsSelector,
+  },
   data() {
     return {
       title: "",
       description: "",
       body: "",
-      tag: "",
       selected: [],
-      options: [],
       article: null,
       loading: false,
     };
-  },
-  computed: {
-    sortedOptions() {
-      const sortedArray = [...this.options];
-      return sortedArray.sort();
-    },
   },
   methods: {
     async onSubmit() {
@@ -124,20 +100,6 @@ export default {
         this.loading = false;
       }
     },
-    addTag() {
-      this.options.push(this.tag);
-      this.selected.push(this.tag);
-      this.tag = "";
-      this.$refs.form.reset();
-    },
-    async getTags() {
-      try {
-        const res = await getAllTags();
-        this.options = res.data.tags;
-      } catch (error) {
-        this.$emit("fail", extractErrorMessage(error));
-      }
-    },
     async getArticle(slug) {
       try {
         const res = await getArticleBySlug(slug);
@@ -146,9 +108,11 @@ export default {
         this.$emit("fail", extractErrorMessage(error));
       }
     },
+    handleSelectTags(newTags) {
+      this.selected = newTags;
+    },
   },
   mounted() {
-    this.getTags();
     const { slug } = this.$route.params;
     if (!slug) return;
     this.getArticle(slug);
