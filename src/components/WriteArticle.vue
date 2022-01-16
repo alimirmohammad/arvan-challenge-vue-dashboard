@@ -48,11 +48,11 @@
 
 <script>
 import { ValidationObserver } from "vee-validate";
-import FormTextField from "../components/FormTextField.vue";
+import FormTextField from "./FormTextField.vue";
 import { getArticleBySlug, writeArticle } from "../api/articles-api";
-import FormTextAreaField from "../components/FormTextAreaField.vue";
-import TagsSelector from "../components/TagsSelector.vue";
-import LoadingButton from "../components/LoadingButton.vue";
+import FormTextAreaField from "./FormTextAreaField.vue";
+import TagsSelector from "./TagsSelector.vue";
+import LoadingButton from "./LoadingButton.vue";
 import { ROUTE_NAMES } from "../constants/routes";
 import extractErrorMessage from "../utils/extractErrorMessage";
 
