@@ -31,6 +31,8 @@
               rows="8"
             ></form-text-area-field>
             <loading-button
+              class="submit-btn"
+              variant="primary"
               type="submit"
               :loading="loading"
               label="Submit"
@@ -130,5 +132,8 @@ export default {
 }
 .article-section {
   flex: 7;
+}
+.submit-btn {
+  width: 100px;
 }
 </style>

@@ -40,9 +40,13 @@
             type="password"
             class="mb-7"
           ></form-text-field>
-          <b-button block variant="primary" type="submit">{{
-            isRegister ? "Register" : "Login"
-          }}</b-button>
+          <loading-button
+            block
+            variant="primary"
+            type="submit"
+            :label="isRegister ? 'Register' : 'Login'"
+            :loading="loading"
+          ></loading-button>
         </b-form>
       </validation-observer>
       <p class="mt-3 mb-0">
@@ -65,10 +69,11 @@ import extractErrorMessage from "../utils/extractErrorMessage";
 import AppToast from "../components/AppToast.vue";
 import { MUTATIONS_NAMES } from "../constants/mutation-names";
 import { ROUTE_NAMES } from "../constants/routes";
+import LoadingButton from "../components/LoadingButton.vue";
 
 export default {
   name: "AuthForm",
-  components: { FormTextField, ValidationObserver, AppToast },
+  components: { FormTextField, ValidationObserver, AppToast, LoadingButton },
   props: ["isRegister"],
   data() {
     return {
@@ -77,11 +82,13 @@ export default {
       username: "",
       toastVisible: false,
       errorMessage: "",
+      loading: false,
     };
   },
   methods: {
     async onSubmit() {
       try {
+        this.loading = true;
         const authData = await authenticate({
           isRegister: this.isRegister,
           email: this.email,
@@ -94,6 +101,7 @@ export default {
         const message = extractErrorMessage(error);
         this.errorMessage = message;
         this.showToast();
+        this.loading = false;
       }
     },
     showToast() {
