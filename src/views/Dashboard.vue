@@ -1,92 +1,18 @@
 <template>
   <div class="page">
-    <header
-      class="header d-flex justify-content-between align-items-center pl-6 pr-7"
-    >
-      <div class="header-left d-flex align-items-center">
-        <p class="logo">Arvan Challenge</p>
-        <p class="welcome">Welcome {{ username }}</p>
-      </div>
-      <b-button variant="outline-info" @click="logout">Logout</b-button>
-    </header>
-    <aside class="aside">
-      <nav>
-        <p class="nav-title pl-6 py-3">Post</p>
-        <router-link class="link" :to="{ name: ALL_ARTICLES_ROUTE_NAME }"
-          >All Articles</router-link
-        >
-        <router-link class="link" :to="{ name: CREATE_ARTICLE_ROUTE_NAME }"
-          >New Article</router-link
-        >
-      </nav>
-    </aside>
-    <main class="main">
-      <app-toast
-        :variant="wasSuccessful ? 'success' : 'danger'"
-        :title="toastTitle"
-        :dismissible="false"
-        :show="toastVisible"
-        :body="toastBody"
-        :onDismiss="hideToast"
-        :top="20"
-      />
-      <router-view @success="onSuccess" @fail="onFail"></router-view>
-    </main>
+    <app-header></app-header>
+    <app-aside></app-aside>
+    <dashboard-main></dashboard-main>
   </div>
 </template>
 
 <script>
-import { ROUTE_NAMES } from "../constants/routes";
-import { MUTATIONS_NAMES } from "../constants/mutation-names";
-import AppToast from "../components/AppToast.vue";
+import AppHeader from "../components/AppHeader.vue";
+import AppAside from "../components/AppAside.vue";
+import DashboardMain from "../components/DashboardMain.vue";
+
 export default {
-  components: { AppToast },
-  data() {
-    return {
-      ALL_ARTICLES_ROUTE_NAME: ROUTE_NAMES.ARTICLES_FIRST_PAGE,
-      CREATE_ARTICLE_ROUTE_NAME: ROUTE_NAMES.CREATE_ARTICLE,
-      toastVisible: false,
-      message: "",
-      wasSuccessful: false,
-    };
-  },
-  computed: {
-    username() {
-      return this.$store.state.username;
-    },
-    toastTitle() {
-      if (!this.wasSuccessful) return "";
-      return `${this.message !== "deleted" ? "Well done! " : ""}`;
-    },
-    toastBody() {
-      if (!this.wasSuccessful) return this.message;
-      return `Article ${this.message} successfully`;
-    },
-  },
-  methods: {
-    logout() {
-      this.$store.commit(MUTATIONS_NAMES.LOGOUT);
-      this.$router.replace({ name: ROUTE_NAMES.LOGIN });
-    },
-    showToast() {
-      this.toastVisible = true;
-    },
-    hideToast() {
-      this.toastVisible = false;
-    },
-    onSuccess(message) {
-      this.wasSuccessful = true;
-      this.setToastMessage(message);
-    },
-    onFail(message) {
-      this.wasSuccessful = false;
-      this.setToastMessage(message);
-    },
-    setToastMessage(message) {
-      this.message = message;
-      this.showToast();
-    },
-  },
+  components: { DashboardMain, AppHeader, AppAside },
 };
 </script>
 
@@ -101,47 +27,5 @@ export default {
   grid-template-areas:
     "header header"
     "aside main";
-
-  .header {
-    color: $white;
-    background-color: $gray-900;
-    width: 100%;
-    height: 100%;
-    grid-area: header;
-
-    .header-left {
-      gap: 20px;
-      .logo {
-        font-size: 22px;
-      }
-    }
-  }
-
-  .aside {
-    color: $white;
-    background-color: $blue;
-    grid-area: aside;
-
-    .link {
-      color: inherit;
-      display: block;
-      padding: 11px 34px;
-      font-size: 18px;
-
-      &.router-link-exact-active {
-        background-color: rgba(255, 255, 255, 0.15);
-      }
-    }
-
-    .nav-title {
-      font-size: 22px;
-    }
-  }
-
-  .main {
-    grid-area: main;
-    padding: 24px 30px 73px;
-    position: relative;
-  }
 }
 </style>
