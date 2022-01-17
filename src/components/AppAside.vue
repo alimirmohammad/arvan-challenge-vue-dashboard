@@ -2,12 +2,20 @@
   <aside class="aside">
     <nav>
       <p class="nav-title pl-6 py-3">Post</p>
-      <router-link class="link" :to="{ name: ALL_ARTICLES_ROUTE_NAME }"
-        >All Articles</router-link
+      <router-link
+        class="link"
+        :class="{ 'my-active-class': $route.name === ARTICLES_PAGE_ROUTE_NAME }"
+        :to="{ name: ARTICLES_FIRST_PAGE_ROUTE_NAME }"
       >
-      <router-link class="link" :to="{ name: CREATE_ARTICLE_ROUTE_NAME }"
-        >New Article</router-link
+        All Articles
+      </router-link>
+      <router-link
+        class="link"
+        :class="{ 'my-active-class': $route.name === EDIT_ARTICLE_ROUTE_NAME }"
+        :to="{ name: CREATE_ARTICLE_ROUTE_NAME }"
       >
+        New Article
+      </router-link>
     </nav>
   </aside>
 </template>
@@ -19,8 +27,10 @@ export default {
   name: "AppAside",
   data() {
     return {
-      ALL_ARTICLES_ROUTE_NAME: ROUTE_NAMES.ARTICLES_FIRST_PAGE,
+      ARTICLES_FIRST_PAGE_ROUTE_NAME: ROUTE_NAMES.ARTICLES_FIRST_PAGE,
+      ARTICLES_PAGE_ROUTE_NAME: ROUTE_NAMES.ARTICLES_PAGE,
       CREATE_ARTICLE_ROUTE_NAME: ROUTE_NAMES.CREATE_ARTICLE,
+      EDIT_ARTICLE_ROUTE_NAME: ROUTE_NAMES.EDIT_ARTICLE,
     };
   },
 };
@@ -39,7 +49,8 @@ export default {
     padding: 11px 34px;
     font-size: 18px;
 
-    &.router-link-exact-active {
+    &.router-link-exact-active,
+    &.my-active-class {
       background-color: rgba(255, 255, 255, 0.15);
     }
   }
