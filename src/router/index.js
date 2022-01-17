@@ -32,11 +32,13 @@ const routes = [
         path: ROUTES.ARTICLES_FIRST_PAGE_PATH,
         name: ROUTE_NAMES.ARTICLES_FIRST_PAGE,
         component: ArticlesList,
+        props: true,
       },
       {
         path: ROUTES.ARTICLES_PAGE_PATH,
         name: ROUTE_NAMES.ARTICLES_PAGE,
         component: ArticlesList,
+        props: true,
       },
       {
         path: ROUTES.CREATE_ARTICLE_PATH,
