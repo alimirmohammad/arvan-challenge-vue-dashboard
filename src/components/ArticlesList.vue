@@ -150,7 +150,7 @@ export default {
 }
 .table-actions-cell {
   height: 40px;
-  & > .btn.btn-info {
+  &::v-deep .dropdown-toggle {
     display: flex;
     align-items: center;
     gap: 21px;
