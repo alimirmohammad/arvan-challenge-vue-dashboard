@@ -1,6 +1,6 @@
-export function mapArticleDtoToTableRow(article, i) {
+export function mapArticleDtoToTableRow(article, i, page, perPage) {
   return {
-    index: i + 1,
+    index: i + 1 + (page - 1) * perPage,
     slug: article.slug,
     Title: article.title,
     Author: `@${article.author.username}`,

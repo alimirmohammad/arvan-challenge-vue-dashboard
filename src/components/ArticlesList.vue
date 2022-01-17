@@ -91,7 +91,9 @@ export default {
       try {
         this.busy = true;
         const res = await getAllArticles({ page, limit: this.perPage });
-        this.items = res.data.articles.map(mapArticleDtoToTableRow);
+        this.items = res.data.articles.map((article, index) =>
+          mapArticleDtoToTableRow(article, index, page, this.perPage)
+        );
         this.totalRows = res.data.articlesCount;
       } catch (error) {
         this.$emit("fail", extractErrorMessage(error));
