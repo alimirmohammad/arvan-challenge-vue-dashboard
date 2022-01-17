@@ -1,47 +1,52 @@
 <template>
   <div>
-    <h1>New Article</h1>
+    <h1>{{ article ? "Edit" : "New" }} Article</h1>
     <div class="wrapper">
       <section class="article-section">
-        <validation-observer v-slot="{ handleSubmit }">
-          <b-form @submit.prevent="handleSubmit(onSubmit)">
-            <form-text-field
-              name="title"
-              rules="required"
-              label="Title"
-              v-model="title"
-              type="text"
-              class="mb-4"
-            ></form-text-field>
-            <form-text-field
-              name="description"
-              rules="required"
-              label="Description"
-              v-model="description"
-              type="text"
-              class="mb-4"
-            ></form-text-field>
-            <form-text-area-field
-              name="body"
-              rules="required"
-              label="Body"
-              v-model="body"
-              type="text"
-              class="mb-7"
-              rows="8"
-            ></form-text-area-field>
-            <loading-button
-              class="submit-btn"
-              variant="primary"
-              type="submit"
-              :loading="loading"
-              label="Submit"
-            ></loading-button>
-          </b-form>
-        </validation-observer>
+        <b-overlay :show="articleLoading" rounded="sm">
+          <validation-observer v-slot="{ handleSubmit }">
+            <b-form @submit.prevent="handleSubmit(onSubmit)">
+              <form-text-field
+                name="title"
+                rules="required"
+                label="Title"
+                v-model="title"
+                placeholder="Title"
+                type="text"
+                class="mb-4"
+              ></form-text-field>
+              <form-text-field
+                name="description"
+                rules="required"
+                label="Description"
+                v-model="description"
+                placeholder="Description"
+                type="text"
+                class="mb-4"
+              ></form-text-field>
+              <form-text-area-field
+                name="body"
+                rules="required"
+                label="Body"
+                v-model="body"
+                type="text"
+                class="mb-7"
+                rows="8"
+              ></form-text-area-field>
+              <loading-button
+                class="submit-btn"
+                variant="primary"
+                type="submit"
+                :loading="buttonLoading"
+                label="Submit"
+              ></loading-button>
+            </b-form>
+          </validation-observer>
+        </b-overlay>
       </section>
       <tags-selector
         :selected="selected"
+        :articleLoading="articleLoading"
         @change-selected-tags="handleSelectTags"
       ></tags-selector>
     </div>
@@ -74,12 +79,14 @@ export default {
       body: "",
       selected: [],
       article: null,
-      loading: false,
+      buttonLoading: false,
+      articleLoading: false,
+      tagsLoading: false,
     };
   },
   methods: {
     async onSubmit() {
-      this.loading = true;
+      this.buttonLoading = true;
       try {
         await writeArticle({
           title: this.title,
@@ -92,16 +99,18 @@ export default {
         this.$router.push({ name: ROUTE_NAMES.ARTICLES_FIRST_PAGE });
       } catch (error) {
         this.$emit("fail", extractErrorMessage(error));
-        this.loading = false;
+        this.buttonLoading = false;
       }
     },
     async getArticle(slug) {
+      this.articleLoading = true;
       try {
         const res = await getArticleBySlug(slug);
         this.article = res.data.article;
       } catch (error) {
         this.$emit("fail", extractErrorMessage(error));
       }
+      this.articleLoading = false;
     },
     handleSelectTags(newTags) {
       this.selected = newTags;

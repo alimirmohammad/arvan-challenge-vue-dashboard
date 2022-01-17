@@ -15,6 +15,7 @@
         :state="errors.length > 0 ? false : null"
         :id="name"
         :type="type"
+        :placeholder="placeholder"
         trim
       ></b-form-input>
       <b-form-invalid-feedback :state="errors.length > 0 ? false : null">
@@ -29,7 +30,7 @@ import { ValidationProvider } from "vee-validate";
 
 export default {
   name: "FormTextField",
-  props: ["name", "rules", "label", "value", "type", "mode"],
+  props: ["name", "rules", "label", "value", "type", "mode", "placeholder"],
   components: { ValidationProvider },
   methods: {
     handleInput(text) {
