@@ -8,8 +8,6 @@
       small
       stacked="md"
       :busy="busy"
-      :per-page="perPage"
-      :current-page="currentPage"
       id="articles-table"
     >
       <template #table-busy>
@@ -72,7 +70,7 @@ export default {
       slug: "",
       busy: false,
       currentPage: 1,
-      perPage: 3,
+      perPage: 10,
       totalRows: 0,
     };
   },
@@ -82,17 +80,17 @@ export default {
     },
   },
   created() {
-    this.getArticles();
     this.validatePageNumberFromUrl(this.page);
+    this.getArticles(this.currentPage);
   },
   methods: {
     setSlug(slug) {
       this.slug = slug;
     },
-    async getArticles() {
+    async getArticles(page) {
       try {
         this.busy = true;
-        const res = await getAllArticles();
+        const res = await getAllArticles({ page, limit: this.perPage });
         this.items = res.data.articles.map(mapArticleDtoToTableRow);
         this.totalRows = res.data.articlesCount;
       } catch (error) {
@@ -133,6 +131,9 @@ export default {
   watch: {
     page(val) {
       this.validatePageNumberFromUrl(val);
+    },
+    currentPage(val) {
+      this.getArticles(val);
     },
   },
 };
