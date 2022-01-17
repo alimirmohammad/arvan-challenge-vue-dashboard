@@ -103,7 +103,7 @@ export default {
     async handleDelete() {
       try {
         await deleteArticle(this.slug);
-        await this.getArticles();
+        await this.getArticles(this.currentPage);
         this.$emit("success", "deleted");
       } catch (error) {
         this.$emit("fail", extractErrorMessage(error));
