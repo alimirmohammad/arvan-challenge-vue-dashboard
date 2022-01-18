@@ -3,6 +3,13 @@
     class="header d-flex justify-content-between align-items-center pl-6 pr-7"
   >
     <div class="header-left d-flex align-items-center">
+      <button class="hamburger" v-b-toggle.sidebar-backdrop>
+        <div>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </button>
       <p class="logo">Arvan Challenge</p>
       <p>Welcome {{ username }}</p>
     </div>
@@ -43,6 +50,35 @@ export default {
     gap: 20px;
     .logo {
       font-size: 22px;
+    }
+  }
+}
+.hamburger {
+  display: none;
+  &:focus {
+    outline: none;
+  }
+  @include media-breakpoint-down(lg) {
+    display: block;
+    background-color: transparent;
+    border: none;
+    div {
+      position: relative;
+
+      z-index: 1;
+
+      span {
+        display: block;
+        width: 33px;
+        height: 4px;
+        margin-bottom: 5px;
+        position: relative;
+
+        background: #cdcdcd;
+        border-radius: 3px;
+
+        z-index: 1;
+      }
     }
   }
 }

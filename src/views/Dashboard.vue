@@ -1,7 +1,10 @@
 <template>
   <div class="page">
     <app-header></app-header>
-    <app-aside></app-aside>
+    <app-aside class="app-side"></app-aside>
+    <b-sidebar id="sidebar-backdrop" backdrop shadow no-header>
+      <app-aside class="sidebar"></app-aside>
+    </b-sidebar>
     <dashboard-main></dashboard-main>
   </div>
 </template>
@@ -27,5 +30,19 @@ export default {
   grid-template-areas:
     "header header"
     "aside main";
+}
+@include media-breakpoint-down(lg) {
+  .app-side {
+    display: none;
+  }
+
+  .page {
+    grid-template-areas:
+      "header header"
+      "main main";
+  }
+}
+.sidebar {
+  height: 100%;
 }
 </style>
