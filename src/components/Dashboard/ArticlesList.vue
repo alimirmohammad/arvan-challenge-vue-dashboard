@@ -29,10 +29,10 @@
 </template>
 
 <script>
-import { ROUTE_NAMES } from "../constants/routes";
-import { deleteArticle, getAllArticles } from "../api/articles-api";
-import { mapArticleDtoToTableRow, tableFields } from "../utils/table-utils";
-import extractErrorMessage from "../utils/extractErrorMessage";
+import { ROUTE_NAMES } from "../../constants/routes";
+import { deleteArticle, getAllArticles } from "../../api/articles-api";
+import { mapArticleDtoToTableRow, tableFields } from "../../utils/table-utils";
+import extractErrorMessage from "../../utils/extractErrorMessage";
 import TableActionButton from "./TableActionButton.vue";
 import TableLazy from "./TableLazy.vue";
 import DeleteModal from "./DeleteModal.vue";
@@ -121,7 +121,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../app.scss";
+@import "../../app.scss";
 .title {
   color: $black;
   font-size: 2.5rem;

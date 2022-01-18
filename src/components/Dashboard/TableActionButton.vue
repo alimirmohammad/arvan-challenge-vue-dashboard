@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { ROUTE_NAMES } from "../constants/routes";
+import { ROUTE_NAMES } from "../../constants/routes";
 
 export default {
   name: "TableActionButton",
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../app.scss";
+@import "../../app.scss";
 .table-actions-cell {
   height: 2.5rem;
   &::v-deep .dropdown-toggle {

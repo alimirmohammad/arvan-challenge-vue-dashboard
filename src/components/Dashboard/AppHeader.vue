@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { ROUTE_NAMES } from "../constants/routes";
-import { MUTATIONS_NAMES } from "../constants/mutation-names";
+import { ROUTE_NAMES } from "../../constants/routes";
+import { MUTATIONS_NAMES } from "../../constants/mutation-names";
 
 export default {
   name: "AppHeader",
@@ -38,7 +38,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../app.scss";
+@import "../../app.scss";
 .header {
   color: $white;
   background-color: $gray-900;

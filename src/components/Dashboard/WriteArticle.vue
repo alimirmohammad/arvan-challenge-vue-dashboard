@@ -55,13 +55,13 @@
 
 <script>
 import { ValidationObserver } from "vee-validate";
-import FormTextField from "./FormTextField.vue";
-import { getArticleBySlug, writeArticle } from "../api/articles-api";
-import FormTextAreaField from "./FormTextAreaField.vue";
+import FormTextField from "../UI/FormTextField.vue";
+import { getArticleBySlug, writeArticle } from "../../api/articles-api";
+import FormTextAreaField from "../UI/FormTextAreaField.vue";
 import TagsSelector from "./TagsSelector.vue";
-import LoadingButton from "./LoadingButton.vue";
-import { ROUTE_NAMES } from "../constants/routes";
-import extractErrorMessage from "../utils/extractErrorMessage";
+import LoadingButton from "../UI/LoadingButton.vue";
+import { ROUTE_NAMES } from "../../constants/routes";
+import extractErrorMessage from "../../utils/extractErrorMessage";
 
 export default {
   name: "WriteArticle",
@@ -135,7 +135,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../app.scss";
+@import "../../app.scss";
 .wrapper {
   display: flex;
   gap: 1.875rem;

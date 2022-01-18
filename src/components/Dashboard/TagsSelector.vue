@@ -30,9 +30,9 @@
 
 <script>
 import { ValidationObserver } from "vee-validate";
-import FormTextField from "../components/FormTextField.vue";
-import { getAllTags } from "../api/articles-api";
-import extractErrorMessage from "../utils/extractErrorMessage";
+import FormTextField from "../UI/FormTextField.vue";
+import { getAllTags } from "../../api/articles-api";
+import extractErrorMessage from "../../utils/extractErrorMessage";
 
 export default {
   name: "TagsSelector",
@@ -80,7 +80,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../app.scss";
+@import "../../app.scss";
 .tag-section {
   flex: 3;
 }

@@ -63,14 +63,14 @@
 </template>
 
 <script>
-import FormTextField from "../components/FormTextField.vue";
+import FormTextField from "../components/UI/FormTextField.vue";
 import { ValidationObserver } from "vee-validate";
 import { authenticate } from "../api/auth-api";
 import extractErrorMessage from "../utils/extractErrorMessage";
-import AppToast from "../components/AppToast.vue";
+import AppToast from "../components/UI/AppToast.vue";
 import { MUTATIONS_NAMES } from "../constants/mutation-names";
 import { ROUTE_NAMES } from "../constants/routes";
-import LoadingButton from "../components/LoadingButton.vue";
+import LoadingButton from "../components/UI/LoadingButton.vue";
 
 export default {
   name: "AuthForm",

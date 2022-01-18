@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import AppToast from "../components/AppToast.vue";
+import AppToast from "../UI/AppToast.vue";
 
 export default {
   name: "DashboardMain",

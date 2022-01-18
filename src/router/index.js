@@ -2,9 +2,9 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import { ROUTES, ROUTE_NAMES } from "../constants/routes";
 import AuthForm from "../views/AuthForm.vue";
-import ArticlesList from "../components/ArticlesList.vue";
+import ArticlesList from "../components/Dashboard/ArticlesList.vue";
 import Dashboard from "../views/Dashboard.vue";
-import WriteArticle from "../components/WriteArticle.vue";
+import WriteArticle from "../components/Dashboard/WriteArticle.vue";
 import store from "../store/index";
 
 Vue.use(VueRouter);

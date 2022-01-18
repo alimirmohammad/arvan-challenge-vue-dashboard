@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { ROUTE_NAMES } from "../constants/routes";
+import { ROUTE_NAMES } from "../../constants/routes";
 
 export default {
   name: "AppAside",
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../app.scss";
+@import "../../app.scss";
 .aside {
   color: $white;
   background-color: $blue;

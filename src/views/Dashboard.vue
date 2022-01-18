@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import AppHeader from "../components/AppHeader.vue";
-import AppAside from "../components/AppAside.vue";
-import DashboardMain from "../components/DashboardMain.vue";
+import AppHeader from "../components/Dashboard/AppHeader.vue";
+import AppAside from "../components/Dashboard/AppAside.vue";
+import DashboardMain from "../components/Dashboard/DashboardMain.vue";
 
 export default {
   components: { DashboardMain, AppHeader, AppAside },
