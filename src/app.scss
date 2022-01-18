@@ -36,6 +36,18 @@ $spacers: (
 html {
   height: 100%;
   font-size: 16px;
+
+  @include media-breakpoint-down(md) {
+    font-size: 14px;
+  }
+
+  @include media-breakpoint-down(sm) {
+    font-size: 13px;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 11px;
+  }
 }
 
 body {

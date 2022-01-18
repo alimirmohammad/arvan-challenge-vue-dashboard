@@ -41,6 +41,7 @@
             class="mb-7"
           ></form-text-field>
           <loading-button
+            class="mt-5"
             block
             variant="primary"
             type="submit"
@@ -118,9 +119,21 @@ export default {
 @import "../app.scss";
 .form {
   width: 90%;
-  max-width: 28.125rem;
+  max-width: 450px;
   background-color: #eceeef;
   text-align: left;
+  @include media-breakpoint-down(sm) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.3rem;
+  }
+
+  @include media-breakpoint-down(xs) {
+    font-size: 1.2rem;
+  }
 }
 .page {
   display: flex;
@@ -128,6 +141,9 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
+  @include media-breakpoint-down(sm) {
+    background-color: #eceeef;
+  }
 }
 .form-title {
   font-size: 3rem;

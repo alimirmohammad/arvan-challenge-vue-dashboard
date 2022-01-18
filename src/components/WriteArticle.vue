@@ -135,9 +135,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../app.scss";
 .wrapper {
   display: flex;
   gap: 1.875rem;
+  @include media-breakpoint-down(sm) {
+    flex-direction: column;
+    font-size: 1.2rem;
+  }
+  @include media-breakpoint-down(xs) {
+    font-size: 1rem;
+  }
 }
 .article-section {
   flex: 7;
