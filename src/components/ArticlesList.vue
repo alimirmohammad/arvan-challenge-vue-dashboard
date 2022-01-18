@@ -20,13 +20,10 @@
         ></table-action-button>
       </template>
     </b-table>
-    <b-pagination-nav
+    <table-pagination
       :link-gen="linkGen"
       :number-of-pages="totalPages"
-      aria-controls="articles-table"
-      hide-goto-end-buttons
-      use-router
-    ></b-pagination-nav>
+    ></table-pagination>
     <delete-modal @delete-article="handleDelete"></delete-modal>
   </div>
 </template>
@@ -39,10 +36,11 @@ import extractErrorMessage from "../utils/extractErrorMessage";
 import TableActionButton from "./TableActionButton.vue";
 import TableLazy from "./TableLazy.vue";
 import DeleteModal from "./DeleteModal.vue";
+import TablePagination from "./TablePagination.vue";
 export default {
   name: "ArticlesList",
   props: ["page"],
-  components: { TableActionButton, TableLazy, DeleteModal },
+  components: { TableActionButton, TableLazy, DeleteModal, TablePagination },
   data() {
     return {
       items: [],
@@ -128,5 +126,9 @@ export default {
   color: $black;
   font-size: 40px;
   line-height: 48px;
+}
+#articles-table {
+  border-bottom: 1px solid $gray-500;
+  margin-bottom: 60px;
 }
 </style>

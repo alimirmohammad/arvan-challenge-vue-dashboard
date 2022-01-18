@@ -15,11 +15,11 @@ export function mapArticleDtoToTableRow(article, i, page, perPage) {
 }
 
 export const tableFields = [
-  { key: "index", label: "#" },
-  "Title",
-  "Author",
-  "Tags",
-  "Excerpt",
-  "Created",
-  { key: "actions", label: "" },
+  { key: "index", label: "#", tdClass: "align-middle" },
+  { key: "Title", tdClass: "align-middle" },
+  { key: "Author", tdClass: "align-middle" },
+  { key: "Tags", tdClass: "align-middle" },
+  { key: "Excerpt", tdClass: "align-middle" },
+  { key: "Created", tdClass: "align-middle" },
+  { key: "actions", label: "", tdClass: "align-middle" },
 ];
