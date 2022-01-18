@@ -43,13 +43,17 @@
       id="delete-modal"
       centered
       title="Delete Article"
-      cancel-title="No"
-      ok-title="Yes"
-      cancel-variant="light"
-      ok-variant="danger"
       @ok="handleDelete"
     >
       <p class="my-4">Are you sure to delete Article?</p>
+      <template #modal-footer="{ ok, cancel }">
+        <b-button variant="outline-white" class="no actions" @click="cancel()">
+          No
+        </b-button>
+        <b-button class="actions" variant="danger" @click="ok()">
+          Yes
+        </b-button>
+      </template>
     </b-modal>
   </div>
 </template>
@@ -158,5 +162,12 @@ export default {
     padding-right: 18px;
     color: $white;
   }
+}
+.no {
+  border: 1px solid #dddddd;
+}
+.actions {
+  width: 80px;
+  height: 40px;
 }
 </style>
