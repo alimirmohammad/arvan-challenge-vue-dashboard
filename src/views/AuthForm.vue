@@ -118,7 +118,7 @@ export default {
 @import "../app.scss";
 .form {
   width: 90%;
-  max-width: 450px;
+  max-width: 28.125rem;
   background-color: #eceeef;
   text-align: left;
 }
@@ -130,7 +130,7 @@ export default {
   height: 100%;
 }
 .form-title {
-  font-size: 47px;
+  font-size: 3rem;
   font-weight: normal;
   line-height: 1.19;
   color: $gray-title;

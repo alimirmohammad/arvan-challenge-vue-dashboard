@@ -25,12 +25,12 @@ export default {
   border: 1px solid #dddddd;
 }
 .actions {
-  width: 80px;
-  height: 40px;
+  width: 5rem;
+  height: 2.5rem;
 }
 .btn-container {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 1rem;
 }
 </style>

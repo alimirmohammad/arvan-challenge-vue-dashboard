@@ -124,11 +124,11 @@ export default {
 @import "../app.scss";
 .title {
   color: $black;
-  font-size: 40px;
-  line-height: 48px;
+  font-size: 2.5rem;
+  line-height: 3rem;
 }
 #articles-table {
   border-bottom: 1px solid $gray-500;
-  margin-bottom: 60px;
+  margin-bottom: 3.75rem;
 }
 </style>

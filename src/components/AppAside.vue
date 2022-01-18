@@ -46,8 +46,8 @@ export default {
   .link {
     color: inherit;
     display: block;
-    padding: 11px 34px;
-    font-size: 18px;
+    padding: 0.6875rem 2.125rem;
+    font-size: 1.125rem;
 
     &.router-link-exact-active,
     &.my-active-class {
@@ -56,7 +56,7 @@ export default {
   }
 
   .nav-title {
-    font-size: 22px;
+    font-size: 1.375rem;
   }
 }
 </style>

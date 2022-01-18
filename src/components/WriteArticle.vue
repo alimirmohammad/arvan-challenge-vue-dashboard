@@ -137,12 +137,12 @@ export default {
 <style lang="scss" scoped>
 .wrapper {
   display: flex;
-  gap: 30px;
+  gap: 1.875rem;
 }
 .article-section {
   flex: 7;
 }
 .submit-btn {
-  width: 100px;
+  width: 6.25rem;
 }
 </style>

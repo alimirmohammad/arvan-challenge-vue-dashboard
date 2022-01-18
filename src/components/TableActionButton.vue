@@ -31,13 +31,13 @@ export default {
 <style lang="scss" scoped>
 @import "../app.scss";
 .table-actions-cell {
-  height: 40px;
+  height: 2.5rem;
   &::v-deep .dropdown-toggle {
     display: flex;
     align-items: center;
-    gap: 21px;
-    padding-left: 10px;
-    padding-right: 18px;
+    gap: 1.25rem;
+    padding-left: 0.625rem;
+    padding-right: 1.125rem;
     color: $white;
   }
 }

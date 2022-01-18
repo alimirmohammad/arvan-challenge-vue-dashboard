@@ -47,9 +47,9 @@ export default {
   grid-area: header;
 
   .header-left {
-    gap: 20px;
+    gap: 1.25rem;
     .logo {
-      font-size: 22px;
+      font-size: 1.375rem;
     }
   }
 }
@@ -69,13 +69,13 @@ export default {
 
       span {
         display: block;
-        width: 33px;
-        height: 4px;
-        margin-bottom: 5px;
+        width: 2rem;
+        height: 0.25rem;
+        margin-bottom: 0.25rem;
         position: relative;
 
         background: #cdcdcd;
-        border-radius: 3px;
+        border-radius: 4px;
 
         z-index: 1;
       }

@@ -62,7 +62,7 @@ export default {
 <style lang="scss" scoped>
 .main {
   grid-area: main;
-  padding: 24px 30px 73px;
+  padding: 1.5rem 1.875rem 4.5rem;
   position: relative;
 }
 </style>
