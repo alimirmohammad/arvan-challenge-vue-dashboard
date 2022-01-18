@@ -11,25 +11,13 @@
       id="articles-table"
     >
       <template #table-busy>
-        <div class="text-center text-primary my-4">
-          <b-spinner class="align-middle"></b-spinner>
-        </div>
+        <table-lazy></table-lazy>
       </template>
       <template #cell(actions)="data">
-        <b-dropdown text="..." variant="info" class="table-actions-cell">
-          <b-dropdown-item
-            :to="{ name: EDIT_ROUTE, params: { slug: data.item.slug } }"
-          >
-            Edit
-          </b-dropdown-item>
-          <b-dropdown-divider></b-dropdown-divider>
-          <b-dropdown-item-button
-            v-b-modal.delete-modal
-            @click="setSlug(data.item.slug)"
-          >
-            Delete
-          </b-dropdown-item-button>
-        </b-dropdown>
+        <table-action-button
+          @set-slug="setSlug"
+          :slug="data.item.slug"
+        ></table-action-button>
       </template>
     </b-table>
     <b-pagination-nav
@@ -39,22 +27,7 @@
       hide-goto-end-buttons
       use-router
     ></b-pagination-nav>
-    <b-modal
-      id="delete-modal"
-      centered
-      title="Delete Article"
-      @ok="handleDelete"
-    >
-      <p class="my-4">Are you sure to delete Article?</p>
-      <template #modal-footer="{ ok, cancel }">
-        <b-button variant="outline-white" class="no actions" @click="cancel()">
-          No
-        </b-button>
-        <b-button class="actions" variant="danger" @click="ok()">
-          Yes
-        </b-button>
-      </template>
-    </b-modal>
+    <delete-modal @delete-article="handleDelete"></delete-modal>
   </div>
 </template>
 
@@ -63,9 +36,13 @@ import { ROUTE_NAMES } from "../constants/routes";
 import { deleteArticle, getAllArticles } from "../api/articles-api";
 import { mapArticleDtoToTableRow, tableFields } from "../utils/table-utils";
 import extractErrorMessage from "../utils/extractErrorMessage";
+import TableActionButton from "./TableActionButton.vue";
+import TableLazy from "./TableLazy.vue";
+import DeleteModal from "./DeleteModal.vue";
 export default {
   name: "ArticlesList",
   props: ["page"],
+  components: { TableActionButton, TableLazy, DeleteModal },
   data() {
     return {
       items: [],
@@ -151,23 +128,5 @@ export default {
   color: $black;
   font-size: 40px;
   line-height: 48px;
-}
-.table-actions-cell {
-  height: 40px;
-  &::v-deep .dropdown-toggle {
-    display: flex;
-    align-items: center;
-    gap: 21px;
-    padding-left: 10px;
-    padding-right: 18px;
-    color: $white;
-  }
-}
-.no {
-  border: 1px solid #dddddd;
-}
-.actions {
-  width: 80px;
-  height: 40px;
 }
 </style>
