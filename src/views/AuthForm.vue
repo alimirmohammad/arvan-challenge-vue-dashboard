@@ -55,9 +55,12 @@
         <span>{{
           isRegister ? "Already Registered? " : "Don’t have account? "
         }}</span>
-        <router-link class="link" :to="isRegister ? '/login' : '/register'">{{
-          isRegister ? "Login" : "Register Now"
-        }}</router-link>
+        <router-link
+          class="link"
+          :to="isRegister ? LOGIN_ROUTE : REGISTER_ROUTE"
+        >
+          {{ isRegister ? "Login" : "Register Now" }}
+        </router-link>
       </p>
     </div>
   </div>
@@ -70,7 +73,7 @@ import { authenticate } from "../api/auth-api";
 import extractErrorMessage from "../utils/extractErrorMessage";
 import AppToast from "../components/UI/AppToast.vue";
 import { MUTATIONS_NAMES } from "../constants/mutation-names";
-import { ROUTE_NAMES } from "../constants/routes";
+import { ROUTE_NAMES, ROUTES } from "../constants/routes";
 import LoadingButton from "../components/UI/LoadingButton.vue";
 
 export default {
@@ -85,6 +88,8 @@ export default {
       toastVisible: false,
       errorMessage: "",
       loading: false,
+      LOGIN_ROUTE: ROUTES.LOGIN_ROUTE,
+      REGISTER_ROUTE: ROUTES.REGISTER_ROUTE,
     };
   },
   methods: {
