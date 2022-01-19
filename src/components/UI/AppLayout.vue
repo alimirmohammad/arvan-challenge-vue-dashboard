@@ -1,20 +1,26 @@
 <template>
-  <app-layout>
-    <dashboard-main></dashboard-main>
-  </app-layout>
+  <div class="page">
+    <app-header></app-header>
+    <app-aside class="app-aside"></app-aside>
+    <b-sidebar id="sidebar-backdrop" backdrop shadow no-header>
+      <app-aside class="sidebar"></app-aside>
+    </b-sidebar>
+    <slot></slot>
+  </div>
 </template>
 
 <script>
-import DashboardMain from "../components/Dashboard/DashboardMain.vue";
-import AppLayout from "../components/UI/AppLayout.vue";
+import AppHeader from "../Dashboard/AppHeader.vue";
+import AppAside from "../Dashboard/AppAside.vue";
 
 export default {
-  components: { DashboardMain, AppLayout },
+  name: "AppLayout",
+  components: { AppHeader, AppAside },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../app.scss";
+@import "../../app.scss";
 .page {
   width: 100%;
   height: 100vh;
@@ -26,7 +32,7 @@ export default {
     "aside main";
 }
 @include media-breakpoint-down(lg) {
-  .app-side {
+  .app-aside {
     display: none;
   }
 
