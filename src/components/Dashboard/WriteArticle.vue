@@ -38,8 +38,9 @@
                 variant="primary"
                 type="submit"
                 :loading="buttonLoading"
-                label="Submit"
-              ></loading-button>
+              >
+                Submit
+              </loading-button>
             </b-form>
           </validation-observer>
         </b-overlay>
@@ -152,5 +153,10 @@ export default {
 }
 .submit-btn {
   width: 6.25rem;
+}
+h1 {
+  @include media-breakpoint-down(xs) {
+    font-size: 2rem;
+  }
 }
 </style>

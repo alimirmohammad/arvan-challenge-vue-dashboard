@@ -7,7 +7,7 @@
       :show="toastVisible"
       :body="toastBody"
       :onDismiss="hideToast"
-      :top="20"
+      :top="1.25"
     />
     <router-view @success="onSuccess" @fail="onFail"></router-view>
   </main>

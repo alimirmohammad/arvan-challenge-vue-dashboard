@@ -7,7 +7,7 @@
       :show="toastVisible"
       :body="errorMessage"
       :onDismiss="hideToast"
-      :top="30"
+      :top="1.875"
     />
     <div class="form p-6">
       <validation-observer v-slot="{ handleSubmit }">
@@ -45,9 +45,10 @@
             block
             variant="primary"
             type="submit"
-            :label="isRegister ? 'Register' : 'Login'"
             :loading="loading"
-          ></loading-button>
+          >
+            {{ isRegister ? "Register" : "Login" }}
+          </loading-button>
         </b-form>
       </validation-observer>
       <p class="mt-3 mb-0">
