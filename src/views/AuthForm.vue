@@ -75,6 +75,7 @@ import AppToast from "../components/UI/AppToast.vue";
 import { MUTATIONS_NAMES } from "../constants/mutation-names";
 import { ROUTE_NAMES, ROUTES } from "../constants/routes";
 import LoadingButton from "../components/UI/LoadingButton.vue";
+import { saveTokenToLocalStorage } from "../utils/local-storage";
 
 export default {
   name: "AuthForm",
@@ -102,6 +103,7 @@ export default {
           password: this.password,
           username: this.username,
         });
+        saveTokenToLocalStorage(authData.token);
         this.$store.commit(MUTATIONS_NAMES.AUTHENTICATE, authData);
         this.$router.replace({ name: ROUTE_NAMES.ARTICLES_FIRST_PAGE });
       } catch (error) {

@@ -20,6 +20,7 @@
 <script>
 import { ROUTE_NAMES } from "../../constants/routes";
 import { MUTATIONS_NAMES } from "../../constants/mutation-names";
+import { clearLocalStorage } from "../../utils/local-storage";
 
 export default {
   name: "AppHeader",
@@ -30,6 +31,7 @@ export default {
   },
   methods: {
     logout() {
+      clearLocalStorage();
       this.$store.commit(MUTATIONS_NAMES.LOGOUT);
       this.$router.replace({ name: ROUTE_NAMES.LOGIN });
     },

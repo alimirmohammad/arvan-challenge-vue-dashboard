@@ -6,6 +6,12 @@ import ArticlesList from "../components/Dashboard/ArticlesList.vue";
 import Dashboard from "../views/Dashboard.vue";
 import WriteArticle from "../components/Dashboard/WriteArticle.vue";
 import store from "../store/index";
+import {
+  clearLocalStorage,
+  getTokenFromLocalStorage,
+} from "../utils/local-storage";
+import { getCurrentUser } from "../api/auth-api";
+import { MUTATIONS_NAMES } from "../constants/mutation-names";
 
 Vue.use(VueRouter);
 
@@ -56,7 +62,7 @@ const routes = [
     path: ROUTES.CATCH_ALL_ROUTE,
     redirect() {
       const isAuthenticated = store.getters.isAuthenticated;
-      return isAuthenticated ? ROUTES.ARTICLES_ROUTE : ROUTES.LOGIN_ROUTE;
+      return isAuthenticated ? ROUTES.DASHBOARD_ROUTE : ROUTES.LOGIN_ROUTE;
     },
   },
 ];
@@ -67,14 +73,25 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach(function (to, from, next) {
+getTokenFromLocalStorage();
+
+router.beforeEach(async function (to, from, next) {
   const isAuthenticated = store.getters.isAuthenticated;
   if (to.matched.some((record) => record.meta.onlyUnauthenticated)) {
     if (isAuthenticated) next(ROUTES.DASHBOARD_ROUTE);
     else next();
   } else if (to.matched.some((record) => record.meta.onlyAuthenticated)) {
-    if (isAuthenticated) next();
-    else next(ROUTES.LOGIN_ROUTE);
+    if (isAuthenticated) {
+      try {
+        const username = await getCurrentUser();
+        store.commit(MUTATIONS_NAMES.SET_USERNAME, { username });
+        next();
+      } catch (error) {
+        clearLocalStorage();
+        store.commit(MUTATIONS_NAMES.LOGOUT);
+        next(ROUTES.LOGIN_ROUTE);
+      }
+    } else next(ROUTES.LOGIN_ROUTE);
   } else {
     next();
   }

@@ -5,38 +5,20 @@
 </template>
 
 <script>
+import { getCurrentUser } from "../api/auth-api";
 import DashboardMain from "../components/Dashboard/DashboardMain.vue";
 import AppLayout from "../components/UI/AppLayout.vue";
 
 export default {
   components: { DashboardMain, AppLayout },
+  methods: {
+    async getUser() {
+      const currentUser = await getCurrentUser();
+      console.log({ currentUser });
+    },
+  },
+  created() {
+    this.getUser();
+  },
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../app.scss";
-.page {
-  width: 100%;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 15.625rem 1fr;
-  grid-template-rows: 3.75rem 1fr;
-  grid-template-areas:
-    "header header"
-    "aside main";
-}
-@include media-breakpoint-down(lg) {
-  .app-side {
-    display: none;
-  }
-
-  .page {
-    grid-template-areas:
-      "header header"
-      "main main";
-  }
-}
-.sidebar {
-  height: 100%;
-}
-</style>

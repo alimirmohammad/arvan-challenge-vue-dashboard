@@ -9,3 +9,8 @@ export async function authenticate({ isRegister, email, password, username }) {
   const res = await client(url, { method: "POST", data: payload });
   return { token: res.data.user.token, username: res.data.user.username };
 }
+
+export async function getCurrentUser() {
+  const res = await client(API_ROUTES.CURRENT_USER_ROUTE);
+  return res.data.user.username;
+}

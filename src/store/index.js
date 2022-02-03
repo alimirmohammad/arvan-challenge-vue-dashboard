@@ -23,6 +23,12 @@ export default new Vuex.Store({
       state.token = "";
       state.username = "";
     },
+    [MUTATIONS_NAMES.SET_TOKEN](state, payload) {
+      state.token = payload.token;
+    },
+    [MUTATIONS_NAMES.SET_USERNAME](state, payload) {
+      state.username = payload.username;
+    },
   },
   actions: {},
 });
